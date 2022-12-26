@@ -32,4 +32,3 @@ def nestedUpdate(d, keys, func):
         return d
     else:
         return nestedUpdate(d[keys[0]], keys[1:], func)
-    return
