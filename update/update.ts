@@ -1,44 +1,44 @@
 /**
  * Updates property of object that's been passed.
- * @param object - The object we're updating.
+ * @param obj - The object we're updating.
  * @param key - The key to the object value we're updating.
- * @param modify - The function that updates our value.
+ * @param func - The function that updates our value.
  * @returns The updated object.
  */
 const update = (
-    object: { [key: string]: any },
+    obj: { [key: string]: any },
     key: string,
-    modify: (arg: any) => any
+    func: (arg: any) => any
 ): { [key: string]: any } => {
-    if (object == null) {
-        return object;
+    if (obj == null) {
+        return obj;
     } else {
-        object[key] = modify(object[key]);
-        return object;
+        obj[key] = func(obj[key]);
+        return obj;
     }
 }
 
 /**
  * Functional tool that updates a value in an nested object. User must know the path otherwise will not work.
  * Requires update() in the same scope in order to work.
- * @param object The object that needs to be altered.
+ * @param obj The object that needs to be altered.
  * @param keys An array of keys to the path of the value to be updated.
- * @param modify The function that updates the object's value.
+ * @param func The function that updates the object's value.
  * @returns The modified object.
  */
 const nestedUpdate = (
-    object: { [key: string]: any },
+    obj: { [key: string]: any },
     keys: string[],
-    modify: (arg: any) => any
+    func: (arg: any) => any
 ): { [key: string]: any } => {
 
     if (keys.length === 0) {
         throw new Error("Atleast one key is required");
     }
     else if (keys.length === 1) {
-        update(object, keys[0], modify);
-        return object;
+        update(obj, keys[0], func);
+        return obj;
     } else {
-        return nestedUpdate(object[keys[0]], keys.slice(1, keys.length), modify);
+        return nestedUpdate(obj[keys[0]], keys.slice(1, keys.length), func);
     }
 }
