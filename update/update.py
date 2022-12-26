@@ -24,7 +24,6 @@ def update(d, key, func):
     Returns:
         dictionary: The new dictionary.
 """
-
 def nestedUpdate(d, keys, func):
     if len(keys) < 1:
         raise Exception("Atleast one key is required")
