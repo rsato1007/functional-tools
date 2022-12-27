@@ -9,11 +9,9 @@
         dictionary: The new dictionary.
 """
 def update(d, key, func):
-    if d is None:
-        return d
-    else:
+    if d is not None:
         d[key] = func(d[key])
-        return d
+    return d
 
 """Alters the value when it's inside a nested dictionary.
     Arguments:
@@ -25,10 +23,10 @@ def update(d, key, func):
         dictionary: The new dictionary.
 """
 def nestedUpdate(d, keys, func):
-    if len(keys) < 1:
-        raise Exception("Atleast one key is required")
+    if len(keys) > 1:
+        nestedUpdate(d[keys[0]], keys[1:], func)
     elif (len(keys) == 1):
         update(d, keys[0], func)
-        return d
     else:
-        return nestedUpdate(d[keys[0]], keys[1:], func)
+        raise Exception("Atleast one key is required")
+    return d

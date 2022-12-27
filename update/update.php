@@ -26,10 +26,11 @@ function update(array $arr, string $key, callable $func): array {
  */
 function nestedUpdate(array $arr, array $keys, callable $func): array {
     if (count($keys) > 1) {
-        return nestedUpdate($arr[$keys[0]], array_slice($keys, 1), $func);
+        nestedUpdate($arr[$keys[0]], array_slice($keys, 1), $func);
     } else if (count($keys) == 1) {
-        return update($arr, $keys[0], $func);
+        update($arr, $keys[0], $func);
     } else {
         throw new Exception("atleast one key must be passed");
     }
+    return $arr;
 }

@@ -6,12 +6,10 @@
  * @returns The updated object.
  */
 const update = (obj, key, func) => {
-    if (obj == null) {
-        return obj;
-    } else {
+    if (obj !== null) {
         obj[key] = func(obj[key]);
-        return obj;
     }
+    return obj;
 }
 
 /**
@@ -23,13 +21,12 @@ const update = (obj, key, func) => {
  * @returns The modified object.
  */
 const nestedUpdate = (obj, keys, func) => {
-    if (keys.length === 0) {
+    if (keys.length > 1) {
+        nestedUpdate(obj[keys[0]], keys.slice(1, keys.length), func);
+    } else if (keys.length === 1) {
+        update(obj, keys[0], func);
+    } else {
         throw new Error("Atleast one key is required");
     }
-    else if (keys.length === 1) {
-        update(obj, keys[0], func);
-        return obj;
-    } else {
-        return nestedUpdate(obj[keys[0]], keys.slice(1, keys.length), func);
-    }
+    return obj;
 }
